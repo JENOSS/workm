@@ -1,9 +1,24 @@
 //user.js
-import React from 'react'
+import React from 'react';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
 
 class User extends React.Component {
     render(){
         return(
+            <TableRow>
+                <TableCell>{this.props.userid}</TableCell>
+                <TableCell><img src={this.props.image} alt="profile"/></TableCell>
+                <TableCell>{this.props.name}</TableCell>
+                <TableCell>{this.props.id}</TableCell>
+                <TableCell>{this.props.password}</TableCell>
+                <TableCell>{this.props.email}</TableCell>
+                <TableCell>{this.props.auth}</TableCell>
+                <TableCell>{this.props.privatekey}</TableCell>
+            </TableRow>
+
+
+            /*
             <div>
                 <UserProfile 
                     userid={this.props.userid}
@@ -18,11 +33,12 @@ class User extends React.Component {
                     privatekey={this.props.privatekey}
                 />
             </div>
+            */
         )
     }
 }
 
-
+/*
 class UserProfile extends React.Component {
     render(){
         return(
@@ -48,5 +64,5 @@ class Userinfo extends React.Component {
         )
     }
 }
-
+*/
 export default User;
