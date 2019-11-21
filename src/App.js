@@ -7,6 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -17,43 +18,42 @@ const styles = theme => ({
   },
   table: {
     minWidth: 1080
+  },
+  progress: {
+    margin: theme.spacing.unit*2
   }
 });
 
-const users =[
-  {
-    'userid':1,
-    'id': 'nari1539',
-    'password': '1539',
-    'image': 'https://placeimg.com/64/63/4',
-    'name': '박진우',
-    'email': 'nari1539@naver.com',
-    'auth': '1',
-    'privatekey': 'N0122314TZ'
-  },
-  {
-    'userid':2,
-    'id': 'ckckckckck',
-    'password': 'ck123',
-    'image': 'https://placeimg.com/64/63/3',
-    'name': '이창국',
-    'email': 'ckckck@naver.com',
-    'auth': '1',
-    'privatekey': 'N8892344ZZ'
-  },
-  {
-    'userid':3,
-    'id': 'integer',
-    'password': 'int123',
-    'image': 'https://placeimg.com/64/63/1',
-    'name': '유정수',
-    'email': 'integer@naver.com',
-    'auth': '2',
-    'privatekey': 'T0133T314Z'
-  }
-]
 
 class App extends Component{
+
+  state = {
+    users: '',
+    completed: 0
+  }
+
+  componentDidMount() {
+    this.timer = setInterval(this.progress,20);
+    this.callApi()
+      .then(res => this.setState({users: res}))
+      .catch(err => console.log(err));
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
+  callApi = async () => {
+    const response = await fetch("api/users");
+    const body = await response.json();
+    return body;
+  }
+
+  progress = () => {
+    const { completed } = this.state;
+    this.setState({completed: completed >= 100 ? 0 : completed+1});
+  }
+
   render() {
       const { classes } = this.props;
       return (
@@ -72,7 +72,7 @@ class App extends Component{
             </TableRow>
            </TableHead> 
           <TableBody>
-          {users.map(c => {
+          {this.state.users ? this.state.users.map(c => {
             return <User key={c.userid}
                           userid={c.userid}
                           id={c.id}
@@ -83,7 +83,13 @@ class App extends Component{
                           auth={c.auth}
                           privatekey={c.privatekey}
                     />
-          })}       
+          }) : 
+            <TableRow>
+              <TableCell colSpan="6" align="center">
+                <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed}/>
+              </TableCell>
+            </TableRow>
+          }       
           </TableBody>          
          </Table>
         </Paper>
