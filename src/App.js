@@ -1,38 +1,59 @@
 import React, {Component} from 'react';
-//mport logo from './logo.svg';
+
 import User from './components/User';
 import './App.css';
-/*
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <P>COME ON YOU SPURS</P>
-      </header>
-    </div>
-  );
-}
-*/
 
-
-const user ={
-  'name': '박진우',
-  'birth': '960325',
-  'gender': 'man',
-  'auth': '1'
-}
+const users =[
+  {
+    'userid':1,
+    'id': 'nari1539',
+    'password': '1539',
+    'image': 'https://placeimg.com/64/63/4',
+    'name': '박진우',
+    'email': 'nari1539@naver.com',
+    'auth': '1',
+    'privatekey': 'N0122314TZ'
+  },
+  {
+    'userid':2,
+    'id': 'ckckckckck',
+    'password': 'ck123',
+    'image': 'https://placeimg.com/64/63/3',
+    'name': '이창국',
+    'email': 'ckckck@naver.com',
+    'auth': '1',
+    'privatekey': 'N8892344ZZ'
+  },
+  {
+    'userid':3,
+    'id': 'integer',
+    'password': 'int123',
+    'image': 'https://placeimg.com/64/63/1',
+    'name': '유정수',
+    'email': 'integer@naver.com',
+    'auth': '2',
+    'privatekey': 'T0133T314Z'
+  }
+]
 
 class App extends Component{
   render() {
       return (
-        <User
-         name={user.name}
-         birth={user.birth}
-         gender={user.gender}
-         auth={user.auth}
-        />
-      );
+        <div>
+          {users.map(c => {
+            return <User key={c.userid}
+                          userid={c.userid}
+                          id={c.id}
+                          password={c.password}
+                          image={c.image}
+                          name={c.name}
+                          email={c.email}
+                          auth={c.auth}
+                          privatekey={c.privatekey}
+                    />
+          })}                 
+      </div>       
+    );
   }
 }
 
