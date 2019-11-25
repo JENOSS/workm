@@ -74,9 +74,9 @@ class App extends Component{
           <TableBody>
           {this.state.users ? this.state.users.map(c => {
             return <User key={c.userid}
+                          num={c.num}
                           userid={c.userid}
-                          id={c.id}
-                          password={c.password}
+                          password={c.passwd}
                           image={c.image}
                           name={c.name}
                           email={c.email}
